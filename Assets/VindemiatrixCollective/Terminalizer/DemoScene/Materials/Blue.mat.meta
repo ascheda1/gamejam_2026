@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: abff92c9429257e4bbcc378f44ffb547
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324243
+  packageName: 'Terminalizer: in-game console for UI Toolkit'
+  packageVersion: 1.0.1
+  assetPath: Assets/VindemiatrixCollective/Terminalizer/DemoScene/Materials/Blue.mat
+  uploadId: 854032

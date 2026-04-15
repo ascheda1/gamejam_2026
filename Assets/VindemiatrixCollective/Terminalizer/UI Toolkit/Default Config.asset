@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a24b69e0d63524cb624388abb41666, type: 3}
+  m_Name: Default Config
+  m_EditorClassIdentifier: 
+  echoCommands: 1
+  initialVisibility: 1
+  terminalFont: {fileID: 2230732570650464555, guid: 46c88445ca1a52a45be1aeae2cdab0ff, type: 3}
+  commandHistorySize: 10
+  shortcut: 96
+  prompt: '> '
+  title: Terminal
+  lineClasses:
+  - text-color
+  - text-xl
+  textInputClasses:
+  - text-xl
+  initialSize: {x: 800, y: 600}
+  startLocation: {x: 32, y: 32}

@@ -1,0 +1,26 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="terminal" data-source="project://database/Assets/VindemiatrixCollective/Terminalizer/UI%20Toolkit/Terminal%20Config.asset?fileID=11400000&amp;guid=c93773276093da14fbb8051f7894e130&amp;type=2#Terminal Config" style="min-width: 320px; min-height: 200px;">
+        <ui:VisualElement name="row-header">
+            <ui:VisualElement name="container-header">
+                <ui:Label text="Label" class="font-bold text-color text-lg">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:VisualElement name="header-actions">
+                    <ui:Button size="Medium" icon="Close" name="btn-close" icon-image="project://database/Assets/VindemiatrixCollective/Terminalizer/UI%20Toolkit/UnityThemes/UI%20Theme.tss?fileID=4456449167576933126&amp;guid=46c88445ca1a52a45be1aeae2cdab0ff&amp;type=3#check-dash@2x" style="width: 24px; height: 24px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="row-screen">
+            <ui:ListView name="list-screen" virtualization-method="FixedHeight" allow-add="false" allow-remove="false" selection-type="None" fixed-item-height="24" />
+        </ui:VisualElement>
+        <ui:VisualElement name="row-input">
+            <ui:TextField placeholder-text="_" name="text-input" />
+        </ui:VisualElement>
+        <Bindings>
+            <ui:DataBinding property="style.width" data-source-path="initialSize.x" binding-mode="ToTarget" />
+            <ui:DataBinding property="style.height" data-source-path="initialSize.y" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:VisualElement>
+</ui:UXML>

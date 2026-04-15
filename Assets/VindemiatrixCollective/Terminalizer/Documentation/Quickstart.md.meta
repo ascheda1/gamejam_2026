@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c85728ead6bb98b41bb8658d8e0f0b8e
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324243
+  packageName: 'Terminalizer: in-game console for UI Toolkit'
+  packageVersion: 1.0.1
+  assetPath: Assets/VindemiatrixCollective/Terminalizer/Documentation/Quickstart.md
+  uploadId: 854032

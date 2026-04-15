@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: f58171d5b6c089a4db222e4fa3d9a27a
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 12385, guid: 0000000000000000e000000000000000, type: 0}
+  disableValidation: 0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324243
+  packageName: 'Terminalizer: in-game console for UI Toolkit'
+  packageVersion: 1.0.1
+  assetPath: Assets/VindemiatrixCollective/Terminalizer/UI Toolkit/Theme/Terminalizer
+    theme.uss
+  uploadId: 854032

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 091ab177a97b49d449d6f9ff1cdb5722
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324243
+  packageName: 'Terminalizer: in-game console for UI Toolkit'
+  packageVersion: 1.0.1
+  assetPath: Assets/VindemiatrixCollective/Terminalizer/DemoScene/Materials/Grey.mat
+  uploadId: 854032

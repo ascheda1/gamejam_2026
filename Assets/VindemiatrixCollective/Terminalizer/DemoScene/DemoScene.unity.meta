@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3914930bc15c5c243995ca15879c226e
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324243
+  packageName: 'Terminalizer: in-game console for UI Toolkit'
+  packageVersion: 1.0.1
+  assetPath: Assets/VindemiatrixCollective/Terminalizer/DemoScene/DemoScene.unity
+  uploadId: 854032

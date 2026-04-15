@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7611c89fcedc7534e98eb7804e30bff6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324243
+  packageName: 'Terminalizer: in-game console for UI Toolkit'
+  packageVersion: 1.0.1
+  assetPath: Assets/VindemiatrixCollective/Terminalizer/DemoScene/Global Volume Profile.asset
+  uploadId: 854032

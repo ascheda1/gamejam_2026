@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c93773276093da14fbb8051f7894e130
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324243
+  packageName: 'Terminalizer: in-game console for UI Toolkit'
+  packageVersion: 1.0.1
+  assetPath: Assets/VindemiatrixCollective/Terminalizer/UI Toolkit/Default Config.asset
+  uploadId: 854032
