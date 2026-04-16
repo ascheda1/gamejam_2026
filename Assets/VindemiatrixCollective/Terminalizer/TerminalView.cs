@@ -22,7 +22,7 @@ namespace VindemiatrixCollective.Terminalizer
 
         public LineContext(string line, string lineClass = null)
         {
-            Line      = line;
+            Line = line;
             LineClass = lineClass;
         }
     }
@@ -73,20 +73,20 @@ namespace VindemiatrixCollective.Terminalizer
 
         public TerminalView(TerminalModel model, VisualTreeAsset terminalTemplate, TerminalConfig config, UIDocument uiDocument)
         {
-            this.model                         = model;
-            this.config                        = config;
-            this.uiDocument                    = uiDocument;
-            terminalElement                    = terminalTemplate.Instantiate().Q<VisualElement>("terminal");
-            terminalElement.dataSource         = config;
+            this.model = model;
+            this.config = config;
+            this.uiDocument = uiDocument;
+            terminalElement = terminalTemplate.Instantiate().Q<VisualElement>("terminal");
+            terminalElement.dataSource = config;
             terminalElement.transform.position = new Vector3(config.StartLocation.x, config.StartLocation.y, 0);
 
-            textInput        = terminalElement.Q<TextField>("text-input");
-            textElement      = textInput.Q("unity-text-input").Q<TextElement>();
-            listScreen       = terminalElement.Q<ListView>("list-screen");
+            textInput = terminalElement.Q<TextField>("text-input");
+            textElement = textInput.Q("unity-text-input").Q<TextElement>();
+            listScreen = terminalElement.Q<ListView>("list-screen");
             terminalViewport = listScreen.Q<VisualElement>("unity-content-viewport");
-            scrollbar        = listScreen.Q<Scroller>();
-            btnClose         = terminalElement.Q<Button>("btn-close");
-            rowScreen        = terminalElement.Q<VisualElement>("row-screen");
+            scrollbar = listScreen.Q<Scroller>();
+            btnClose = terminalElement.Q<Button>("btn-close");
+            rowScreen = terminalElement.Q<VisualElement>("row-screen");
             VisualElement headerBar = terminalElement.Q<VisualElement>("row-header");
 
             if (config.TextInputClasses != null)
@@ -110,18 +110,18 @@ namespace VindemiatrixCollective.Terminalizer
 
             textInput.style.unityFontDefinition = fontDefinition;
 
-            textElement.enableRichText =  true;
-            btnClose.clicked           += Hide;
+            textElement.enableRichText = true;
+            btnClose.clicked += Hide;
 
             screenLines = new List<LineContext>(model.Lines);
 
-            listScreen.bindItem    += BindItem;
-            listScreen.makeItem    += MakeItem;
-            listScreen.itemsSource =  screenLines;
+            listScreen.bindItem += BindItem;
+            listScreen.makeItem += MakeItem;
+            listScreen.itemsSource = screenLines;
 
             dragManipulator = new DragManipulator(headerBar, terminalElement);
 
-            Selection.selectAllOnFocus   = false;
+            Selection.selectAllOnFocus = false;
             Selection.selectAllOnMouseUp = false;
 
             if (!config.InitialVisibility)
@@ -291,7 +291,7 @@ namespace VindemiatrixCollective.Terminalizer
             VisualElement root = uiDocument.rootVisualElement;
             root.RegisterCallback<KeyDownEvent>(ToggleVisibility, TrickleDown.TrickleDown);
             root.pickingMode = PickingMode.Position;
-            root.focusable   = true;
+            root.focusable = true;
             root.Focus();
         }
 
@@ -317,19 +317,6 @@ namespace VindemiatrixCollective.Terminalizer
         public void Show()
         {
             terminalElement.visible = true;
-
-            textInput.focusable = true;
-            textInput.tabIndex = 0;
-
-            // Immediate focus
-            textInput.Focus();
-
-            // Delayed focus (CRITICAL for WebGL)
-            textInput.schedule.Execute(() =>
-            {
-                textInput.Focus();
-                textInput.SelectAll();
-            }).ExecuteLater(100);
         }
 
         /// <summary>
@@ -346,7 +333,7 @@ namespace VindemiatrixCollective.Terminalizer
 
         private void BindItem(VisualElement element, int index)
         {
-            Label       label   = (Label)element;
+            Label label = (Label)element;
             LineContext context = screenLines[index];
             label.text = context.Line;
 
@@ -401,8 +388,8 @@ namespace VindemiatrixCollective.Terminalizer
 
         private int SplitLines(string line, float maxWidth, string lineClass = null)
         {
-            int     linesAdded = 0;
-            Vector2 size       = MeasureText(line);
+            int linesAdded = 0;
+            Vector2 size = MeasureText(line);
 
             if (size.x < maxWidth && size.y < listScreen.fixedItemHeight)
             {
@@ -410,20 +397,20 @@ namespace VindemiatrixCollective.Terminalizer
                 return 1;
             }
 
-            List<string>  lines       = new();
+            List<string> lines = new();
             StringBuilder currentLine = new();
-            int           lineLength  = 0;
-            int           wordStart   = 0;
+            int lineLength = 0;
+            int wordStart = 0;
 
             for (int i = 0; i <= line.Length; i++)
             {
                 bool isEnd = i == line.Length;
-                char c     = isEnd ? ' ' : line[i];
+                char c = isEnd ? ' ' : line[i];
 
                 if (c == '\n')
                 {
-                    int    wordLength = i - wordStart;
-                    string word       = line.Substring(wordStart, wordLength);
+                    int wordLength = i - wordStart;
+                    string word = line.Substring(wordStart, wordLength);
                     currentLine.AppendLine(' ' + word);
                     lines.Add(currentLine.ToString());
                     currentLine.Clear();

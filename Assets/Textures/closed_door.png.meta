@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 84dc3a03913f1fc4d8d39ea59a069547
+guid: 73a02f1a01e7c4cbdbf6806b86be687d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2510476293373519475
-    second: New Piskel_0
+      213: -3494156700775830923
+    second: closed_door_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: New Piskel_0
+      name: closed_door_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 8
         y: 0
-        width: 1920
-        height: 961
+        width: 17
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d899e6cbc1ff82dd0800000000000000
-      internalID: -2510476293373519475
+      spriteID: 57aa4b45ef2428fc0800000000000000
+      internalID: -3494156700775830923
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      New Piskel_0: -2510476293373519475
+      closed_door_0: -3494156700775830923
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

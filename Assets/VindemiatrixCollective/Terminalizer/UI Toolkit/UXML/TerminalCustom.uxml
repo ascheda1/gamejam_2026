@@ -12,7 +12,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="row-screen" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);">
+        <ui:VisualElement name="row-screen" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); display: flex; visibility: visible; overflow: visible;">
             <ui:ListView name="list-screen" virtualization-method="FixedHeight" allow-add="false" allow-remove="false" selection-type="None" fixed-item-height="24" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);"/>
         </ui:VisualElement>
         <ui:VisualElement name="row-input" style="background-color: rgba(255, 255, 255, 0); color: rgb(0, 0, 0); min-width: 700px; min-height: 50px;">
