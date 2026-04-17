@@ -178,11 +178,20 @@ public class CommandsHandler : MonoBehaviour
         else if (command.Contains("bedroom.stereo.play(metal)")){
             terminal_text.text += "\nPlaying metal...";
             Stereo.GetComponent<Animator>().SetBool("playing", true);
+            Stereo.GetComponent<PlayingStereo>().playMetal();
+            return true;
+        }
+        else if (command.Contains("bedroom.stereo.play(mozart)"))
+        {
+            terminal_text.text += "\nPlaying mozart...";
+            Stereo.GetComponent<Animator>().SetBool("playing", true);
+            Stereo.GetComponent<PlayingStereo>().playMozart();
             return true;
         }
         else if (command.Contains("bedroom.stereo.off")){
             terminal_text.text += "\nTurning off radio...";
             Stereo.GetComponent<Animator>().SetBool("playing", false);
+            Stereo.GetComponent<PlayingStereo>().stopMusic();
             return true;
         }
 
