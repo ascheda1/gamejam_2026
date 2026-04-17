@@ -17,7 +17,7 @@ public class CommandsHandler : MonoBehaviour
 
     public GameObject Sprinkler;
 
-    public GameObject Radio;
+    public GameObject Stereo;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -175,14 +175,14 @@ public class CommandsHandler : MonoBehaviour
             Sprinkler.GetComponent<Animator>().SetBool("watering", false);
             return true;
         }
-        else if (command.Contains("bedroom.radio.play(metal)")){
+        else if (command.Contains("bedroom.stereo.play(metal)")){
             terminal_text.text += "\nPlaying metal...";
-            Radio.GetComponent<Animator>().SetBool("playing", true);
+            Stereo.GetComponent<Animator>().SetBool("playing", true);
             return true;
         }
-        else if (command.Contains("bedroom.radio.off")){
+        else if (command.Contains("bedroom.stereo.off")){
             terminal_text.text += "\nTurning off radio...";
-            Radio.GetComponent<Animator>().SetBool("playing", false);
+            Stereo.GetComponent<Animator>().SetBool("playing", false);
             return true;
         }
 
