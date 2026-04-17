@@ -1,10 +1,10 @@
 using UnityEngine;
 using TMPro;
+
 public class CommandsHandler : MonoBehaviour
 {
 
     public TMP_Text terminal_text;
-
     public GameObject BedroomOverlay;
     public GameObject BathroomOverlay;
     public GameObject KitchenOverlay;
@@ -14,6 +14,10 @@ public class CommandsHandler : MonoBehaviour
     public GameObject BedroomDoor;
     public GameObject GarageDoor;
     public GameObject KitchenDoor;
+
+    public GameObject Sprinkler;
+
+    public GameObject Radio;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -157,6 +161,28 @@ public class CommandsHandler : MonoBehaviour
             terminal_text.text += "\nClosing kitchen door...";
             KitchenDoor.SetActive(false);
             // Add your logic to close the kitchen door here
+            return true;
+        }
+        else if (command.Contains("garden.sprinkler.on"))
+        {
+            terminal_text.text += "\nStarting garden sprinkler...";
+            Sprinkler.GetComponent<Animator>().SetBool("watering", true);
+            return true;
+        }
+        else if (command.Contains("garden.sprinkler.off"))
+        {
+            terminal_text.text += "\nStoping garden sprinkler...";
+            Sprinkler.GetComponent<Animator>().SetBool("watering", false);
+            return true;
+        }
+        else if (command.Contains("bedroom.radio.play(metal)")){
+            terminal_text.text += "\nPlaying metal...";
+            Radio.GetComponent<Animator>().SetBool("playing", true);
+            return true;
+        }
+        else if (command.Contains("bedroom.radio.off")){
+            terminal_text.text += "\nTurning off radio...";
+            Radio.GetComponent<Animator>().SetBool("playing", false);
             return true;
         }
 
