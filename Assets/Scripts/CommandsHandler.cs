@@ -1,10 +1,14 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
+using System.Linq;
 
 public class CommandsHandler : MonoBehaviour
 {
 
     public TMP_Text terminal_text;
+    public TMP_InputField terminal_input;
     public GameObject BedroomOverlay;
     public GameObject BathroomOverlay;
     public GameObject KitchenOverlay;
@@ -18,16 +22,42 @@ public class CommandsHandler : MonoBehaviour
     public GameObject Sprinkler;
 
     public GameObject Stereo;
+
+    Queue<string> commands = new Queue<string>();
+    public int queue_pointer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        terminal_input = this.GetComponent<TMP_InputField>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        bool pointer_changed = false;
+        if (UnityEngine.InputSystem.Keyboard.current.upArrowKey.wasPressedThisFrame)
+        {
+            if (queue_pointer - 1 < commands.Count && queue_pointer - 1 >= 0)
+            {
+                queue_pointer--;
+                pointer_changed = true;
+            }
+        }
+        if (UnityEngine.InputSystem.Keyboard.current.downArrowKey.wasPressedThisFrame)
+        {
+            if (queue_pointer + 1 <= commands.Count && queue_pointer + 1 >= 0)
+            {
+                queue_pointer++;
+                pointer_changed = true;
+            }
+        }
+        if (pointer_changed)
+        {
+            if (queue_pointer == commands.Count)
+                terminal_input.text = "";
+            else
+                terminal_input.text = commands.ElementAt(queue_pointer);
+        }
     }
 
     bool processCommand(string command)
@@ -177,20 +207,17 @@ public class CommandsHandler : MonoBehaviour
         }
         else if (command.Contains("bedroom.stereo.play(metal)")){
             terminal_text.text += "\nPlaying metal...";
-            Stereo.GetComponent<Animator>().SetBool("playing", true);
             Stereo.GetComponent<PlayingStereo>().playMetal();
             return true;
         }
         else if (command.Contains("bedroom.stereo.play(mozart)"))
         {
             terminal_text.text += "\nPlaying mozart...";
-            Stereo.GetComponent<Animator>().SetBool("playing", true);
             Stereo.GetComponent<PlayingStereo>().playMozart();
             return true;
         }
         else if (command.Contains("bedroom.stereo.off")){
             terminal_text.text += "\nTurning off radio...";
-            Stereo.GetComponent<Animator>().SetBool("playing", false);
             Stereo.GetComponent<PlayingStereo>().stopMusic();
             return true;
         }
@@ -204,6 +231,8 @@ public class CommandsHandler : MonoBehaviour
         var command = gameObject.GetComponent<TMP_InputField>().text;
         gameObject.GetComponent<TMP_InputField>().text = "";
         terminal_text.text += "\n> " + command;
+        commands.Enqueue(command);
+        queue_pointer = commands.Count;
         processCommand(command);
         Debug.Log("Received command: " + command);
         // Process the command here
