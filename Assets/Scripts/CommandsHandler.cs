@@ -7,6 +7,8 @@ using System.Linq;
 public class CommandsHandler : MonoBehaviour
 {
 
+    public statsSetter stats;
+
     public TMP_Text terminal_text;
     public TMP_InputField terminal_input;
     public GameObject BedroomOverlay;
@@ -20,8 +22,8 @@ public class CommandsHandler : MonoBehaviour
     public GameObject KitchenDoor;
 
     public GameObject Sprinkler;
-
     public GameObject Stereo;
+    public GameObject Shower;
 
     Queue<string> commands = new Queue<string>();
     public int queue_pointer = 0;
@@ -68,18 +70,18 @@ public class CommandsHandler : MonoBehaviour
         if (command.Contains("help"))
         {
             terminal_text.text += "\nAvailable commands:\n- <color=#00FFFF>help</color>: Show this help message\n- <color=#00FFFF>clear</color>: Clear the terminal\n- <color=#00FFFF>echo [message]</color>: Echo the message back to the terminal \n- <color=#00FFFF>room.lights.on/off</color>: Turn on/off room lights \n- <color=#00FFFF>room.door.open/close</color>: Open/close room doors";
-            return true;
+            return false;
         }
         else if (command.Contains("clear"))
         {
             terminal_text.text = "";
-            return true;
+            return false;
         }
         else if (command.StartsWith("echo "))
         {
             string message = command.Substring(5); // Get the message after "echo "
             terminal_text.text += "\n" + message;
-            return true;
+            return false;
         }
         else if (command.Contains("bedroom.lights.on"))
         {
@@ -221,6 +223,18 @@ public class CommandsHandler : MonoBehaviour
             Stereo.GetComponent<PlayingStereo>().stopMusic();
             return true;
         }
+        else if (command.Contains("bathroom.shower.on"))
+        {
+            terminal_text.text += "\nTurning on shower...";
+            Shower.GetComponent<Animator>().SetBool("showerOn", true);
+            return true;
+        }
+        else if (command.Contains("bathroom.shower.off"))
+        {
+            terminal_text.text += "\nTurning off shower...";
+            Shower.GetComponent<Animator>().SetBool("showerOn", false);
+            return true;
+        }
 
 
         terminal_text.text += "\nUnknown command: <color=red>\"" + command + "\"</color>";
@@ -233,7 +247,11 @@ public class CommandsHandler : MonoBehaviour
         terminal_text.text += "\n> " + command;
         commands.Enqueue(command);
         queue_pointer = commands.Count;
-        processCommand(command);
+        if (processCommand(command))
+        {
+            stats.override_val++;
+        }
+
         Debug.Log("Received command: " + command);
         // Process the command here
         StartCoroutine(Refocus());
