@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 public class statsSetter : MonoBehaviour
 {
     [Range(0, 100)] 
-    public int trust = 100;
+    public float trust = 100;
     [Range(0, 100)]
     public int override_val = 0;
     
@@ -22,11 +23,11 @@ public class statsSetter : MonoBehaviour
     void Update()
     {
         var scaleUp = trustUp.transform.localScale;
-        scaleUp.x = Mathf.FloorToInt(trust / 4.0f) * 0.2f;
+        scaleUp.x = Mathf.FloorToInt(Convert.ToInt32(trust)/ 4.0f) * 0.2f;
         trustUp.transform.localScale = scaleUp;
 
         var scaleDown = trustDown.transform.localScale;
-        scaleDown.x = Mathf.CeilToInt(trust / 4.0f) * 0.2f;
+        scaleDown.x = Mathf.CeilToInt(Convert.ToInt32(trust) / 4.0f) * 0.2f;
         trustDown.transform.localScale = scaleDown;
 
 

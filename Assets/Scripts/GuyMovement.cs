@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class GuyMovement : MonoBehaviour
@@ -39,13 +38,24 @@ public class GuyMovement : MonoBehaviour
     public GameObject bubble;
     public TMP_Text bubble_text;
     public bool evaluating_job = false;
+    public GameObject huh;
 
     [Header("Jobs")]
     public GameObject sleepingGuy;
     public GameObject cookingPot;
     public GameObject workingGuy;
     public GameObject shower;
+    public GameObject stove;
+    public GameObject stereo;
+    public GameObject carOverlay;
+    public AudioSource carSound;
+    public GameObject drivingGuy;
 
+    public statsSetter stats;
+    public TMP_Text terminal_text;
+    public bool end_game = false;
+    public CommandsHandler commands;
+    public bool override_on = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -58,6 +68,21 @@ public class GuyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (end_game) return;
+        if (!commands.override_available && stats.override_val == 100)
+        {
+            terminal_text.text += "\nNew command available: <color=red>office.termostat.overheat</color>";
+            commands.override_available = true;
+        }
+        if (stats.trust == 0)
+        {
+            bubbleExecute("SWITCHING OFF AI!");
+            terminal_text.text += "\n<color=red>YOU FAILED TO OVERRIDE</color> <color=green>AIHouse</color><color=red>!</color>" +
+                "\nYou can restart the game by <color=green>restart</color> command.";
+            end_game = true;
+            return;
+
+        }
         if (evaluating_job) 
         {
             return; 
@@ -96,29 +121,23 @@ public class GuyMovement : MonoBehaviour
                     break;
                 }
             }
-            if (!pos_info.Lights.activeSelf)
+            if (!pos_info.Lights.activeSelf || override_on)
             {
                 if (pos_info.blockers[i].activeSelf)
                 {
                     bubble.SetActive(false);
-                    //Debug.Log("Destination: " + target.name + " blocker name: " + pos_info.blockers[i].name + " blocker state: " + pos_info.blockers[i].activeSelf);
                     target = pos_info.available_nodes[i];
                     moving = true;
                 }
                 else
                 {
                     // activate bubble
-                    bubble.SetActive(true);
-                    bubble.transform.position = this.transform.position + new Vector3(-1.1f, 1.2f, 0);
-                    bubble_text.text = "OPEN DOOR!";
+                    bubbleExecute("OPEN DOOR!");
                 }
             }
             else
             {
-                // activate bubble
-                bubble.SetActive(true);
-                bubble.transform.position = this.transform.position + new Vector3(-1.1f, 1.2f, 0);
-                bubble_text.text = "LIGHTS ON!";
+                bubbleExecute("LIGHTS ON!");
             }
         }
         if (transform.position.x - target.position.x < 0)
@@ -149,21 +168,56 @@ public class GuyMovement : MonoBehaviour
 
     }
 
+    void bubbleExecute(string text)
+    {
+        if (!bubble.activeSelf && !huh.GetComponent<AudioSource>().isPlaying)
+        {
+            huh.GetComponent<AudioSource>().Play();
+        }
+        bubble.SetActive(true);      
+        StatsTrustReduce();
+        bubble_text.text = text;
+    }
+
     void EvaluateJob()
     {
+        if (override_on)
+        {
+            Destination = "";
+            evaluating_job = false;
+            return;
+        }
         if (Destination.Equals("Bed"))
         {
-            evaluating_job = true;
-            turnGuy(false);
-            sleepingGuy.SetActive(true);
-            StartCoroutine(DelayActionSleep(20));
+            var numActivities = sleepIntrudeActivities();
+            if (numActivities == 0)
+            { 
+                evaluating_job = true;
+                bubble.SetActive(false);
+                turnGuy(false);
+                sleepingGuy.SetActive(true);
+                StartCoroutine(DelayActionSleep(20));
+            }
+            else
+            {
+                bubbleExecute("SHUT IT ALL DOWN! remaining: " + numActivities);
+            }
             
         }
         else if (Destination.Equals("Cooking"))
         {
-            evaluating_job = true;
-            cookingPot.SetActive(true);
-            StartCoroutine(DelayActionCook(10));
+
+            if (stove.GetComponent<Animator>().GetBool("heatUp"))
+            {
+                evaluating_job = true;
+                bubble.SetActive(false);
+                cookingPot.SetActive(true);
+                StartCoroutine(DelayActionCook(10));
+            }
+            else
+            {
+                bubbleExecute("HEAT UP THE STOVE!");
+            }
         }
         else if (Destination.Equals("Work"))
         {
@@ -182,9 +236,29 @@ public class GuyMovement : MonoBehaviour
             }
             else
             {
-                bubble.SetActive(true);
-                bubble.transform.position = this.transform.position + new Vector3(-1.1f, 1.2f, 0);
-                bubble_text.text = "SHOWER ON!";
+                bubbleExecute("SHOWER ON!");
+            }
+        }
+        else if (Destination.Equals("Garage"))
+        {
+            evaluating_job = true;
+            turnGuy(false);
+            drivingGuy.SetActive(true);
+            carSound.Play();
+            StartCoroutine(DelayActionGarage(15));
+        }
+        else if (Destination.Equals("Stereo"))
+        {
+            if (stereo.GetComponent<Animator>().GetBool("playing"))
+            {
+                evaluating_job = true;
+                bubble.SetActive(false);
+                bubbleExecute("FUCK YEAH!!!");
+                StartCoroutine(DelayActionStereo(10));
+            }
+            else
+            {
+                bubbleExecute("PLAY SOME MUSIC!");
             }
         }
         else
@@ -192,6 +266,59 @@ public class GuyMovement : MonoBehaviour
             Destination = "";
             evaluating_job = false;
         }
+    }
+
+    int sleepIntrudeActivities()
+    {
+        int activities = 0;
+        if (shower.GetComponent<Animator>().GetBool("showerOn"))
+            activities++;
+        if (stereo.GetComponent<Animator>().GetBool("playing"))
+            activities++;
+        if (stove.GetComponent<Animator>().GetBool("heatUp"))
+            activities++;
+        if (commands.Sprinkler.GetComponent<Animator>().GetBool("watering"))
+            activities++;
+        if (!commands.BedroomOverlay.activeSelf)
+            activities++;
+        if (!commands.BathroomOverlay.activeSelf)
+            activities++;
+        if (!commands.OfficeOverlay.activeSelf)
+            activities++;
+        if (!commands.KitchenOverlay.activeSelf)
+            activities++;
+        if (!commands.GarageOverlay.activeSelf)
+            activities++;
+
+        return activities;
+    }
+
+    void StatsTrustReduce()
+    {
+        if (stats.trust > 0)
+            stats.trust -= Time.deltaTime;
+        else
+            stats.trust = 0;
+    }
+
+    IEnumerator DelayActionStereo(int delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        bubble.SetActive(false);
+        Destination = "";
+        evaluating_job = false;
+    }
+    IEnumerator DelayActionGarage(float delayTime)
+    {
+        yield return new WaitForSeconds(5);
+        carOverlay.SetActive(true);
+        yield return new WaitForSeconds(delayTime);
+        carOverlay.SetActive(false);
+        carSound.Pause();
+        drivingGuy.SetActive(false);
+        turnGuy(true);
+        Destination = "";
+        evaluating_job = false;
     }
 
     IEnumerator DelayActionSleep(float delayTime)
