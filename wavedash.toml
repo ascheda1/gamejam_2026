@@ -1,0 +1,5 @@
+game_id = "OVERRIDE"
+upload_dir = "./wavedash_upload_dir"
+
+[unity]
+version = "6000.4.2f1"
